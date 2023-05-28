@@ -16,30 +16,37 @@
 
 //Declaring all textures and functions related to texture
 //Textures for menu
-GLuint introBg, initialBg, scoreBoard; 
+GLuint introBg, menuBg, scoreBoard,helpBg; 
 //Textures for Bhuloka
 GLuint earthBg, rightClouds, leftClouds, leftTrees, rightTrees, character, honesty, meditation, anger, lust, greed;
 //Textures for Swargloka
 GLuint spalace, hanging;
 //Textures for Pattalloka
-GLuint Pstaticbg, Pmovingbg, Pmirrormovingbg, Pcharacter, nviolence;  
-
+#define MAX_FRAMES 8
+GLuint Pstaticbg, Pmovingbg, Pmirrormovingbg, Pcharacter, nviolence, spriteTextures[MAX_FRAMES], Pjump;  
+//Textures for transition
+GLuint bhutrans, pataltrans, svargatrans;
 
 //Declaring all constants
 float screenWidth = 1000.0, screenHeight = 600.0;
 
+//Declaring variables related to time
+int elapsedTime = 0;
+int startTime;
+int currentTime;
+int seconds;
+int minutes;
 //Declaring variables of character
-float Pxpos, Pypos;
+float Pxpos = 200.0, Pypos = 60.0;
 float Bxpos = 200.0, Bypos = 70.0;
 float Sxpos = 250.0 , Sypos = 60.0;
 
 //Declaring variables of positive obstacles
-float Ppxpos1, Ppxpos2, Ppypos1, Ppypos2;
+float Ppxpos1 = 1100.0, Ppxpos2 =1700.0, Ppypos1 = 260.0, Ppypos2 = 260.0;
 float Bpxpos1 = 1100.0, Bpxpos2 = 1600.0 , Bpypos1 = 260.0, Bpypos2 = 260.0;
-float Spxpos1, Spxpos2, Spypos1, Spypos2;
 
 //Declaring variables of negative obstacles
-float Pnxpos1, Pnxpos2, Pnypos1, Pnypos2;
+float Pnxpos1 = 1000.0 , Pnxpos2 = 1300.0 , Pnypos1 = 60.0, Pnypos2 = 0.0;
 float Bnxpos1 = 1400.0, Bnxpos2 = 1800.0, Bnypos1 = 70.0, Bnypos2 = 70.0;
 float Snxpos1 = 1100.0 , Snxpos2 = 1600.0 , Snypos1 = 60.0 , Snypos2 =60.0;
 
@@ -59,6 +66,7 @@ int changeDir1 = 0, changeDir2 = 0;
 /*Pattal loka position*/
 float PmovingPos=0.0,PmirrormovingPos=1000.0;
 int Pk=0;
+int currentFrame = 0;
 /*Pattal loka velocity*/
 float Pvel = 1.0, Pyvel=2.0;
 float Pobvel=1.0;
@@ -71,7 +79,10 @@ float Sjumpduration = 0.0f;
 
 //Declaring all boolean expression
 bool jumping = false;
-
+bool gameStarted = false;
+bool help = false;
+bool quit = false;
+bool back = false;
 
 //Declaring variables for sound
 ALuint backgroundSource, source;
@@ -79,12 +90,18 @@ ALuint backgroundSource, source;
 //Declaring variables for score
 int score = 0;
 
-
+//Declaring miscellaneous variable
+float k=0.0;
+int level = 0;
 //Declaring all functions used
 /*Texture functions*/
 void drawtexture(GLuint texture,float x,float y,float height,float width);
 void drawSwargTexture(GLuint texture, float x, float y, float height, float width);
+void loadTextures();
+void update(int value);
 
+/*Time functions*/
+void drawTime();
 /*Music functions*/
 void playBackgroundMusic(const char* filename);
 void playSound(const char* filename);
@@ -92,7 +109,7 @@ void playSound(const char* filename);
 /*Score functions*/
 void drawScore();
 void finalscoretext();
-
+void backtext();
 /*Level functions*/
 void rdltext(int level);
 void playBhulok();
@@ -119,7 +136,10 @@ int main(int argc, char **argv) {
     glewInit();
     glutKeyboardFunc(keyCallback);
     init();
+    loadTextures();
     glutIdleFunc(display);
+    glutTimerFunc(100, update, 0);
+    glutMouseFunc(mouseClick);
     glutMainLoop();
     alDeleteSources(1, &backgroundSource);
     alDeleteSources(1, &source);
@@ -131,10 +151,75 @@ int main(int argc, char **argv) {
 
 void display() {
    glClear(GL_COLOR_BUFFER_BIT);
-   //playBhulok();
-   //playSwarglok();
-   playPatallok();
-   glFlush();
+   if(k<=10.0){
+   k=k+0.01;
+   }
+   if (!gameStarted && !help && !quit && !back) {
+        if(k>=10.0){
+        drawtexture(menuBg,0.0,0.0,screenHeight,screenWidth);
+        glFlush();
+        }
+        else{
+        drawtexture(introBg,0.0,0.0,screenHeight,screenWidth);
+        glFlush();
+        } 
+    }
+   if  (!gameStarted && help && !quit && back) {
+        drawtexture(menuBg,0.0,0.0,screenHeight,screenWidth);
+        help = false;
+        back = false;
+        glFlush();
+   }
+   if( help && !gameStarted && !quit && !back){
+        drawtexture(helpBg,0.0,0.0,screenHeight,screenWidth);
+        backtext();
+        glFlush(); 
+   }
+   if( !help && !gameStarted && quit && !back ){
+        glutSetWindow(glutGetWindow());
+        glutDestroyWindow(glutGetWindow());
+   }
+   if(gameStarted){
+    if (startTime == 0) {
+        startTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
+    }
+    if((level == -1) && (minutes <= 1.0)){
+        playPatallok();
+    }
+    else if((level == 1)&& (minutes <= 1.0)){
+        playSwarglok();
+    }
+    else if((level == 0)&& (minutes <= 1.0)){
+        playBhulok();
+    }  
+    drawScore();
+    if( minutes >=1.0){
+        Pxpos = 200.0, Pypos = 60.0,Bxpos = 200.0, Bypos = 70.0,Sxpos = 250.0 , Sypos = 60.0;
+        Ppxpos1 = 1100.0, Ppxpos2 =1700.0, Ppypos1 = 260.0, Ppypos2 = 260.0;
+        Pnxpos1 = 1000.0 , Pnxpos2 = 1300.0 , Pnypos1 = 60.0, Pnypos2 = 0.0;
+        Bpxpos1 = 1100.0, Bpxpos2 = 1600.0 , Bpypos1 = 260.0, Bpypos2 = 260.0;
+        Bnxpos1 = 1400.0, Bnxpos2 = 1800.0, Bnypos1 = 70.0, Bnypos2 = 70.0;
+        Snxpos1 = 1100.0 , Snxpos2 = 1600.0 , Snypos1 = 60.0 , Snypos2 =60.0;
+        Sbgxpos1 = -5.0f, Sbgxpos2 = 995.0f;
+        degree1 = 0.0, degree2 = 0.0, radian1 = 0.0, radian2 = 0.0;
+        xHinge1 =750.0, xHinge2 =1250.0;
+        changeDir1 = 0, changeDir2 = 0;
+        Brcloudpos = 0.0f, Blcloudpos = 600.0f, Blefttreepos = 0.0, Brighttreepos = 500.0;
+        PmovingPos=0.0,PmirrormovingPos=1000.0;
+        Pk=0;
+        if(score <-300){
+            level = -1;
+            drawtexture(pataltrans,0.0,0.0,screenHeight,screenWidth);
+        }else if(score > 300){
+            level = 1;
+            drawtexture(svargatrans,0.0,0.0,screenHeight,screenWidth);
+        } else{
+            level = 0;
+            drawtexture(bhutrans,0.0,0.0,screenHeight,screenWidth);
+        }
+    }
+    glFlush();
+    }
 }
 
 void playBhulok(){
@@ -182,6 +267,8 @@ void playBhulok(){
     Bpxpos1=1100.0;
     }
     if((Bypos+165.0>=270.0)&&(Bpxpos1<=Bxpos+140.0)&&(Bpxpos2>=Bxpos-45.0)){
+    playSound("goodthing.wav");
+    alSourcePlay(source);
     score+=100.0;
     Bpxpos1=1300.0;
     }
@@ -192,6 +279,8 @@ void playBhulok(){
     Bnxpos2=1600.0;
     }
     if((Bypos+165.0>=270.0)&&(Bpxpos2<=Bxpos+140.0)&&(Bpxpos2>=Bxpos-45.0)){
+    playSound("goodthing.wav");
+    alSourcePlay(source);
     score+=100.0;
     Bpxpos2=1300.0;
     }
@@ -203,6 +292,8 @@ void playBhulok(){
     Bnxpos1=1200.0;
     }
     if((Bypos<=(100.0))&&(Bnxpos1<=(Bxpos+140.0))&&(Bnxpos1>=(Bxpos-55.0))){
+    playSound("badthing.wav");
+    alSourcePlay(source);
     score-=100.0;
     Bnxpos1=1400.0;
     }
@@ -213,12 +304,13 @@ void playBhulok(){
     Bnxpos2=1400.0;
     }
     if((Bypos<=(100.0))&&(Bnxpos2<=(Bxpos+140.0))&&(Bnxpos2>=(Bxpos-55.0))){
+    playSound("badthing.wav");
+    alSourcePlay(source);
     score-=100.0;
     Bnxpos2=1800.0;
     }
     drawtexture(scoreBoard,690.0,510.0,88.0,309.0);
-    drawScore();
-    // drawTime();
+    drawTime();
     }
 void playSwarglok(){
     drawSwargTexture(spalace, Sbgxpos1, 0.0, screenHeight, screenWidth +5.0);
@@ -259,6 +351,8 @@ void playSwarglok(){
         xHinge1 = 1100.0;
     }
     if(((Sypos + 165.0) >= yOscillate1) && (xOscillate1 <= (Sxpos + 140.0)) && (xOscillate1 >= (Sxpos - 45.0))) {
+        playSound("goodthing.wav");
+        alSourcePlay(source);
         score+=50.0;
         xHinge1 = 1200;
     }
@@ -288,6 +382,8 @@ void playSwarglok(){
         xHinge2 = 1400.0;
     }
     if(((Sypos + 165.0) >= yOscillate2) && (xOscillate2 <= (Sxpos + 140.0)) && (xOscillate2 >= (Sxpos - 45.0))) {
+        playSound("goodthing.wav");
+        alSourcePlay(source);
         score += 50.0;
         xHinge2 = 1450;
     }
@@ -298,6 +394,8 @@ void playSwarglok(){
         Snxpos1 = 1000.0;
     }
     if((Sypos <= 100.0) && ((Sxpos + 140.0) >= Snxpos1) && (Sxpos <= (Snxpos1 + 45.0))) {
+        playSound("badthing.wav");
+        alSourcePlay(source);
         score -= 25;
         Snxpos1 = 50.0;
     }
@@ -308,14 +406,10 @@ void playSwarglok(){
         Snxpos2=1500.0;
     }
     if((Sypos <= 100.0) && ((Sxpos + 140.0) >= Snxpos2) && (Sxpos <= (Snxpos2 + 45.0))) {
+        playSound("badthing.wav");
+        alSourcePlay(source);
         score-=25;
         Snxpos2=1450.0;
-    }
-    if((Snxpos2 + 45.0) < Snxpos1) {
-        Snxpos1 -= 0.8;
-        if(Snxpos1 <= 0.0) {
-            Snxpos1 -= 1.0;
-        }
     }
 
     if (jumping) {
@@ -330,26 +424,34 @@ void playSwarglok(){
         }
     }
     drawtexture(scoreBoard, 690.0, 510.0, 88.0, 309.0);
-    drawScore();
-    //drawTime(); 
-
+    drawTime();
 }
 void playPatallok(){
    drawtexture(Pstaticbg,0.0,0.0,screenHeight,screenWidth);
 
-   drawtexture(Pmovingbg,PmovingPos,0.0,screenHeight,screenWidth);
+   drawSwargTexture(Pmovingbg,PmovingPos,0.0,screenHeight,screenWidth +5.0);
    PmovingPos -= Pvel;
    if(PmovingPos+screenWidth<=0.0){
     PmovingPos = 1000.0;
    }
 
-   drawtexture(Pmirrormovingbg,PmirrormovingPos,0.0,screenHeight,screenWidth);
+   drawSwargTexture(Pmirrormovingbg,PmirrormovingPos,0.0,screenHeight,screenWidth +5.0);
    PmirrormovingPos -= Pvel;
    if(PmirrormovingPos+screenWidth<=0.0){
     PmirrormovingPos = 1000.0;
    }
-   
-   drawtexture(Pcharacter,Pxpos,Pypos,165.0,140.0);
+   if(!jumping) {
+   glBindTexture(GL_TEXTURE_2D, spriteTextures[currentFrame]);
+   glBegin(GL_QUADS);
+   glTexCoord2f(0.0f, 0.0f); glVertex2f(Pxpos, Pypos);
+   glTexCoord2f(1.0f, 0.0f); glVertex2f(Pxpos+140.0,Pypos);
+   glTexCoord2f(1.0f, 1.0f); glVertex2f(Pxpos+140.0, Pypos+165.0f);
+   glTexCoord2f(0.0f, 1.0f); glVertex2f(Pxpos, Pypos+165.0f);
+   glEnd();
+       }
+    else{ 
+        drawtexture(Pjump,Pxpos,Pypos, 165.0,140.0 );
+    }
    if (jumping) {
         Pypos += Pyvel;
         Pyvel -= 0.01f;
@@ -368,6 +470,8 @@ void playPatallok(){
     Pnxpos1=1200.0;
    }
    if(Pypos<=100.0 && Pxpos + 140.0>=Pnxpos1 && Pxpos<=Pnxpos1 +45.0){
+    playSound("badthing.wav");
+    alSourcePlay(source);
     score-=25;
     Pnxpos1=1450.0;
    }
@@ -387,6 +491,8 @@ void playPatallok(){
     Pnypos2-=0.5;
    }
    if(Pypos<=Pnypos2+40.0 && Pxpos + 140.0>=Pnxpos2 && Pxpos<=Pnxpos2 +45.0){
+    playSound("badthing.wav");
+    alSourcePlay(source);
     score-=25;
     Pnxpos2=1450.0;
    }
@@ -397,6 +503,8 @@ void playPatallok(){
     Ppxpos1=1100;
    }
    if((Pypos+165.0>=260.0)&&(Ppxpos1<=Pxpos+140.0)&&(Ppxpos1>=Pxpos-45.0)){
+    playSound("goodthing.wav");
+    alSourcePlay(source);
     score+=50;
     Ppxpos1=1300.0;
    }
@@ -407,10 +515,13 @@ void playPatallok(){
     Ppxpos2=1100;
    }
    if((Pypos+165.0>=260.0)&&(Ppxpos2<=Pxpos+140.0)&&(Ppxpos2>=Pxpos-45.0)){
+    playSound("goodthing.wav");
+    alSourcePlay(source);
     score+=50;
     Ppxpos2=1300.0;
    }
- 
+   drawtexture(scoreBoard,690.0,510.0,88.0,309.0);
+   drawTime();
 }
 void drawtexture(GLuint texture,float x,float y,float height,float width){
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -432,6 +543,32 @@ void drawSwargTexture(GLuint texture, float x, float y, float height, float widt
     glTexCoord2f(1.0, 0.0); glVertex2f(x+width,y);
     glEnd();
 }
+void loadTextures() {
+ 
+    char filename[20];
+    for (int i = 0; i < MAX_FRAMES; i++)
+    {
+        sprintf(filename, "PRun%d.png", i + 1);  // Adjust the index offset
+        FILE *file = fopen(filename, "rb");
+        if (!file)
+        {
+            printf("Error loading sprite %d\n", i);
+            exit(1);
+        }
+        fclose(file);
+
+        spriteTextures[i] = SOIL_load_OGL_texture(
+            filename,
+            SOIL_LOAD_AUTO,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_INVERT_Y);
+        if (!spriteTextures[i])
+        {
+            printf("Error loading texture %d\n", i);
+            exit(1);
+        }
+    }
+}
 void drawScore() {
     char scoreText[30];
     sprintf(scoreText, "    PUNYA = %d", score);
@@ -442,6 +579,18 @@ void drawScore() {
     }
     glColor3f(1.0f, 1.0f, 1.0f);
 }
+
+void backtext() {
+    char backText[30];
+    sprintf(backText, "GO BACK");
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glRasterPos2f(880.0, 570.0);
+    for (int i = 0; backText[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, backText[i]);
+    }
+    glColor3f(1.0f, 1.0f, 1.0f);
+}
+
 void init() {
 
    glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -471,6 +620,14 @@ void init() {
    Pcharacter = SOIL_load_OGL_texture("character.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    nviolence = SOIL_load_OGL_texture("nviolence.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    greed = SOIL_load_OGL_texture("pgreed.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   introBg = SOIL_load_OGL_texture("initialbg.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   menuBg = SOIL_load_OGL_texture("menu.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   helpBg = SOIL_load_OGL_texture("helpbg.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   bhutrans= SOIL_load_OGL_texture("bhuloktrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   pataltrans = SOIL_load_OGL_texture("pataltrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   svargatrans = SOIL_load_OGL_texture("svargatrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   Pjump = SOIL_load_OGL_texture("PJump.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   playBackgroundMusic("music.wav");
 }
 void keyCallback(unsigned char key, int x, int y) {
     if (key == ' ' && !jumping) {
@@ -482,4 +639,135 @@ void keyCallback(unsigned char key, int x, int y) {
         Syvel = 1.5f;
         Pyvel = 1.5f;
     }
+}
+
+void mouseClick(int button, int state, int x, int y) {
+    if (!gameStarted && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if ((x >= 325.0 && x <= 655.0) && (y >= 172.0 && y <= 272.0) && !help) { 
+            playSound("option.wav");
+            alSourcePlay(source);
+            gameStarted = true;
+        }
+        if ((x >= 325.0 && x <= 655.0) && (y >= 315.0 && y <= 414.0) && !help) {
+            playSound("option.wav");
+            alSourcePlay(source);
+            help = true;
+        }
+        if ((x >= 325.0 && x <= 655.0) && (y >= 448.0 && y <= 549.0) && !help) {
+            playSound("option.wav");
+            alSourcePlay(source);
+            quit = true;
+        }
+        if ((x >= 880.0 && x <= 988.0) && (y >= 10.0 && y <= 30.0)) {
+            playSound("option.wav");
+            alSourcePlay(source);
+            back = true;
+        }
+    }
+}
+void drawTime() {
+    char timeText[30];
+    currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
+    if (((minutes >= 1.0) && (seconds > 10.0) )) {
+        startTime = currentTime;  
+        seconds = 0;
+        minutes = 0;
+    } else {
+        minutes = (currentTime - startTime) / 60;
+        seconds = (currentTime - startTime) % 60;
+    }
+    sprintf(timeText, "    Time: %02d:%02d", minutes, seconds);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glRasterPos2f(18.0, 560.0);
+    for (int i = 0; timeText[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, timeText[i]);
+    }
+    glColor3f(1.0f, 1.0f, 1.0f);
+}
+void update(int value)
+{
+    currentFrame = (currentFrame + 1) % MAX_FRAMES;
+    glutPostRedisplay();
+    glutTimerFunc(100, update, 0);
+}
+void playBackgroundMusic(const char* filename) {
+    ALuint buffer;
+    ALenum format;
+    ALsizei freq;
+    SNDFILE* sndfile;
+    SF_INFO sfinfo;
+    
+    alGenBuffers(1, &buffer);
+    
+    sndfile = sf_open(filename, SFM_READ, &sfinfo);
+    if (!sndfile) {
+        printf("Error opening sound file: %s\n", filename);
+        return;
+    }
+    
+    if (sfinfo.channels == 1)
+        format = AL_FORMAT_MONO16;
+    else if (sfinfo.channels == 2)
+        format = AL_FORMAT_STEREO16;
+    else {
+        printf("Unsupported channel count: %d\n", sfinfo.channels);
+        sf_close(sndfile);
+        return;
+    }
+    
+    freq = sfinfo.samplerate;
+    
+    ALsizei size = sfinfo.frames * sfinfo.channels * sizeof(short);
+    short* samples = (short*)malloc(size);
+    
+    sf_readf_short(sndfile, samples, sfinfo.frames);
+    
+    alBufferData(buffer, format, samples, size, freq);
+    sf_close(sndfile);
+    free(samples);
+    
+    alGenSources(1, &backgroundSource);
+    alSourcei(backgroundSource, AL_BUFFER, buffer);
+    alSourcei(backgroundSource, AL_LOOPING, AL_TRUE);
+    alSourcePlay(backgroundSource);
+    
+}
+void playSound(const char* filename) {
+    ALuint buffer;
+    ALenum format;
+    ALsizei freq;
+    SNDFILE* sndfile;
+    SF_INFO sfinfo;
+    
+    alGenBuffers(1, &buffer);
+    
+    sndfile = sf_open(filename, SFM_READ, &sfinfo);
+    if (!sndfile) {
+        printf("Error opening sound file: %s\n", filename);
+        return;
+    }
+    
+    if (sfinfo.channels == 1)
+        format = AL_FORMAT_MONO16;
+    else if (sfinfo.channels == 2)
+        format = AL_FORMAT_STEREO16;
+    else {
+        printf("Unsupported channel count: %d\n", sfinfo.channels);
+        sf_close(sndfile);
+        return;
+    }
+    
+    freq = sfinfo.samplerate;
+    
+    ALsizei size = sfinfo.frames * sfinfo.channels * sizeof(short);
+    short* samples = (short*)malloc(size);
+    
+    sf_readf_short(sndfile, samples, sfinfo.frames);
+    
+    alBufferData(buffer, format, samples, size, freq);
+    sf_close(sndfile);
+    free(samples);
+    
+    alGenSources(1, &source);
+    alSourcei(source, AL_BUFFER, buffer);
 }

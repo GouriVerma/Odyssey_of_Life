@@ -31,6 +31,7 @@ For libraries installation
 - For sndfile :
   sudo apt install libsndfile1-dev
 - For soil :
+  sudo apt-get install libsoil-dev
   
   
   Compiling the file

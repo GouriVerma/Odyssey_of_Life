@@ -15,23 +15,23 @@ The header files used under OpenGL library are glut,gl,glew,glu and under OpenAL
 
 
 ## Installation instructions 
-For cloning repository- git clone 
+For cloning repository- ```git clone``` 
 
 For libraries installation
 - For OpenGl :
-  sudo apt install mesa-utils libgl1-mesa-dev
+  ```sudo apt install mesa-utils libgl1-mesa-dev```
 - For glut :
-  sudo apt install freeglut3-dev
+  ```sudo apt install freeglut3-dev```
 - For glew :
-  sudo apt install libglew-dev
+  ```sudo apt install libglew-dev```
 - For OpenAL :
-  sudo apt install libopenal-dev
+  ```sudo apt install libopenal-dev```
 - For alut :
-  sudo apt install libalut-dev
+  ```sudo apt install libalut-dev```
 - For sndfile :
-  sudo apt install libsndfile1-dev
+  ```sudo apt install libsndfile1-dev```
 - For soil :
-  sudo apt-get install libsoil-dev
+  ```sudo apt-get install libsoil-dev```
   
   
   Compiling the file

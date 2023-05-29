@@ -54,7 +54,7 @@ float Snxpos1 = 1100.0 , Snxpos2 = 1600.0 , Snypos1 = 60.0 , Snypos2 =60.0;
 /*For bhulok position*/
 float Brcloudpos = 0.0f, Blcloudpos = 600.0f, Blefttreepos = 0.0, Brighttreepos = 500.0;
 /*For bhulok Velocity*/
-float Bvel = 1.1f , Byvel = 2.0f;
+float Bvel = 1.5f , Byvel = 2.0f;
 float Bjumpduration = 0.0f;
 /*For svarglok position*/
 float Sbgxpos1 = -5.0f, Sbgxpos2 = 995.0f;
@@ -621,7 +621,7 @@ void init() {
    Pmirrormovingbg = SOIL_load_OGL_texture("mirrormovingpl.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    Pcharacter = SOIL_load_OGL_texture("character.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    nviolence = SOIL_load_OGL_texture("nviolence.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-   greed = SOIL_load_OGL_texture("pgreed.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   greed = SOIL_load_OGL_texture("pgreed602,516.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    introBg = SOIL_load_OGL_texture("initialbg.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    menuBg = SOIL_load_OGL_texture("menu.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    helpBg = SOIL_load_OGL_texture("helpbg.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);

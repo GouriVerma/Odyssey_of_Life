@@ -19,23 +19,31 @@ For cloning repository- ```git clone https://github.com/GouriVerma/Game.git```
 
 For libraries installation
 - For OpenGl :
-  ```sudo apt install mesa-utils libgl1-mesa-dev```
+  ```Ubuntu
+  sudo apt install mesa-utils libgl1-mesa-dev
 - For glut :
-  ```sudo apt install freeglut3-dev```
+  ```Ubuntu
+  sudo apt install freeglut3-dev
 - For glew :
-  ```sudo apt install libglew-dev```
+  ```Ubuntu
+  sudo apt install libglew-dev
 - For OpenAL :
-  ```sudo apt install libopenal-dev```
+  ```Ubuntu
+  sudo apt install libopenal-dev
 - For alut :
-  ```sudo apt install libalut-dev```
+  ```Ubuntu
+  sudo apt install libalut-dev
 - For sndfile :
-  ```sudo apt install libsndfile1-dev```
+  ```Ubuntu
+  sudo apt install libsndfile1-dev
 - For soil :
-  ```sudo apt-get install libsoil-dev```
+  ```Ubuntu
+  sudo apt-get install libsoil-dev
   
   
   Compiling the file
   
+  ```Ubuntu
   gcc -o final final.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut
   
  ## 

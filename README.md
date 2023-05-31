@@ -73,8 +73,20 @@ There are two things by which you can control the game spacebar and left mouse-c
 
 ### For user-input
 - keyCallback() : It takes the input of the spacebar press and makes the jumping to be true and accordingly set all the variables and make the character readty to jump.
+- mouseClick() : It detects the mouseclick of the user and according to the region where user clicked-start,help,quit,next or back; it specifies the menu and help screens.
 
- 
+### For rendering the different levels on screen
+- playBhulok() : It is a group of functions which collectively displays background, character, obstacles, score and time of level 0. drawTexture() displays the static background, moving clouds, moving trees and obstacles. A snippet of code displays the sprites of character in loop.
+- playPatallok() : Like the above, it is also a group of functions which is rendering background, character, obstacles, score and time of level -1 on screen. drawMovingTexture() is used to display the two mirror images of moving rocks and platform in loop, where one image moves to left and other is displayed next to it. A snippet of code displays the sprites of character in loop.
+- playSwarglok() : As above two, the functions in it also collectively displays background, character, obstacles, score and time of level 1. drawMovingTexture() displays the level 1 background in loop, where one image moves to left and again it is rendered. 
+
+### For loading textures in program and displaying it
+- init() : It sets the the screen ready to display textures and loads all the images in the program which are being displayed during the game. It also loads the music file in the program.
+- display() : This function checks some conditions and display the menu page and help pages accordingly. It checks the level and call the playBhulok(), playSwarglok() and playPatallok() accordingly. Also it displays all the transition screens between the levels.
+
+### For sound
+- playBackgroundMusic() : It loads the sound file for background music and play it in loop until the game ends.
+- playSound() : It loads the sound for obstacles and mouseclick and play it accordingly.
   
   
 

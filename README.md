@@ -15,10 +15,7 @@ The header files used under OpenGL library are glut,gl,glew,glu and under OpenAL
 
 
 ## Installation instructions 
-For cloning repository- 
-```Ubuntu
-git clone https://github.com/GouriVerma/Game.git
-```
+For cloning repository- ```git clone https://github.com/GouriVerma/Game.git``` 
 
 For libraries installation
 - For OpenGl :
@@ -42,12 +39,12 @@ For libraries installation
 - For soil :
   ```Ubuntu
   sudo apt-get install libsoil-dev
-  ```
+  
+  
   Compiling the file
   
   ```Ubuntu
   gcc -o final final.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut
-  ```
   
  ## 
   

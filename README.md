@@ -91,11 +91,11 @@ There are two things by which you can control the game- spacebar and left mousec
 
 ## Contributors
 
-- Ankit Kumar Singh ([@](https://github.com/johndoe))
+- Ankit Kumar Singh ([@ankitsingh37](https://github.com/ankitsingh37))
 - Sai Nikhita Palisetty ([@SaiNikhita-P](https://github.com/SaiNikhita-P))
 - Saurav Kumar Singh  ([@sauravgithub-web](https://github.com/sauravatgithub-web))
 - Sreekar Vetsa  ([@alexjohnson](https://github.com/alexjohnson))
-- Gouri Verma  ([@alexjohnson](https://github.com/alexjohnson))
+- Gouri Verma  ([@GouriVerma](https://github.com/GouriVerma))
 
 
 

@@ -89,6 +89,13 @@ There are two things by which you can control the game- spacebar and left mousec
 - playBackgroundMusic() : It loads the sound file for background music and play it in loop until the game ends.
 - playSound() : It loads the sound for obstacles and mouseclick and play it accordingly.
 
+## Contributors
+
+- Ankit Kumar Singh ([@](https://github.com/johndoe))
+- Sai Nikhita Palisetty ([@SaiNikhita-P](https://github.com/SaiNikhita-P))
+- Alex Johnson ([@alexjohnson](https://github.com/alexjohnson))
+
+
 
   
   

@@ -16,14 +16,14 @@
 
 //Declaring all textures and functions related to texture
 //Textures for menu
-GLuint introBg, menuBg, scoreBoard,helpBg; 
+GLuint introBg, menuBg, scoreBoard,helpBg,help1,help2,help3;
 //Textures for Bhuloka
-GLuint earthBg, rightClouds, leftClouds, leftTrees, rightTrees, character, honesty,pray, meditation, anger, lust, greed,jumpcharacter;
+GLuint earthBg, rightClouds, leftClouds, leftTrees, rightTrees, character, honesty,pray, meditation, anger, lust, greed,Bjump,spriteTextures[5];
 //Textures for Swargloka
 GLuint spalace, hanging;
 //Textures for Pattalloka
 #define MAX_FRAMES 8
-GLuint Pstaticbg, Pmovingbg, Pmirrormovingbg, Pcharacter, nviolence, spriteTextures[MAX_FRAMES], Pjump;  
+GLuint Pstaticbg, Pmovingbg, Pmirrormovingbg, Pcharacter, nviolence, spriteTexturesp[MAX_FRAMES], Pjump; 
 //Textures for transition
 GLuint bhutrans, pataltrans, svargatrans;
 
@@ -82,10 +82,15 @@ bool jumping = false;
 bool gameStarted = false;
 bool help = false;
 bool quit = false;
-bool back = false;
+bool back1 = false;
+bool next1=false;
+bool next2=false;
+bool back2=false;
+bool back3=false;
+
 
 //Declaring variables for sound
-ALuint backgroundSource, source;
+ALuint backgroundSource, source,buttonSource;
 
 //Declaring variables for score
 int score = 0;
@@ -98,6 +103,8 @@ int level = 0;
 void drawtexture(GLuint texture,float x,float y,float height,float width);
 void drawSwargTexture(GLuint texture, float x, float y, float height, float width);
 void loadTextures();
+
+
 void update(int value);
 
 /*Time functions*/
@@ -154,7 +161,9 @@ void display() {
    if(k<=10.0){
    k=k+0.01;
    }
-   if (!gameStarted && !help && !quit && !back) {
+  
+    if (!gameStarted && !help && !quit && !back1&&!next1&&!next2&&!back3&&!back2) {
+        
         if(k>=10.0){
         drawtexture(menuBg,0.0,0.0,screenHeight,screenWidth);
         glFlush();
@@ -164,25 +173,61 @@ void display() {
         glFlush();
         } 
     }
-   if  (!gameStarted && help && !quit && back) {
+   if  (!gameStarted && help && !quit && back1) {
         drawtexture(menuBg,0.0,0.0,screenHeight,screenWidth);
         help = false;
-        back = false;
+        back1 = false;
+    
         glFlush();
    }
-   if( help && !gameStarted && !quit && !back){
-        drawtexture(helpBg,0.0,0.0,screenHeight,screenWidth);
+  
+   if( help && !gameStarted && !quit && !back1&&!next1&&!next2){
+        drawtexture(help1,0.0,0.0,screenHeight,screenWidth);
         backtext();
+       
         glFlush(); 
    }
-   if( !help && !gameStarted && quit && !back ){
+   if(!gameStarted && help && !quit && !back1 && next1&&!next2){
+    
+    drawtexture(help2,0.0,0.0,screenHeight,screenWidth);
+       help = false;
+        
+        glFlush();
+   }
+  
+
+  if(!gameStarted &&!help && !quit && !back1 && !next1&&next2){
+     
+      
+    drawtexture(help3,0.0,0.0,screenHeight,screenWidth);
+       
+       
+        glFlush();
+   }
+    if(!gameStarted &&!help && !quit && !back1 && !next1&&!next2&&back2){
+     
+      
+      back2=false;
+    drawtexture(help1,0.0,0.0,screenHeight,screenWidth);
+       
+       
+        glFlush();
+   }
+   if(!gameStarted &&!help && !quit && !back1 && !next1&&!next2&&back3){
+    
+    drawtexture(help2,0.0,0.0,screenHeight,screenWidth);
+       
+       
+        glFlush();
+   }
+   if( !help && !gameStarted && quit && !back1 ){
         glutSetWindow(glutGetWindow());
         glutDestroyWindow(glutGetWindow());
    }
-   if(gameStarted){
-    if (startTime == 0) {
-        startTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
-    }
+   if(gameStarted){ 
+     if (startTime == 0) {
+            startTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
+        }
     if((level == -1) && (minutes <= 1.0)){
         playPatallok();
     }
@@ -248,7 +293,19 @@ void playBhulok(){
     Brighttreepos=1000.0;
    }
     
-   drawtexture(character,Bxpos,Bypos,165.0,140.0);
+   
+   if(!jumping) {
+   glBindTexture(GL_TEXTURE_2D, spriteTextures[currentFrame]);
+   glBegin(GL_QUADS);
+   glTexCoord2f(0.0f, 0.0f); glVertex2f(Pxpos, Pypos);
+   glTexCoord2f(1.0f, 0.0f); glVertex2f(Pxpos+140.0,Pypos);
+   glTexCoord2f(1.0f, 1.0f); glVertex2f(Pxpos+140.0, Pypos+165.0f);
+   glTexCoord2f(0.0f, 1.0f); glVertex2f(Pxpos, Pypos+165.0f);
+   glEnd();
+       }
+    else{ 
+        drawtexture(Bjump,Bxpos,Bypos, 165.0,140.0 );
+    }
    if (jumping) {
         Bypos += Byvel;
         Byvel -= 0.01f;
@@ -324,7 +381,28 @@ void playSwarglok(){
         Sbgxpos2 = 1000.0;
     }
 
-    drawtexture(character, Sxpos, Sypos, 165.0, 140.0);
+    
+    
+   glBindTexture(GL_TEXTURE_2D, spriteTextures[currentFrame]);
+   glBegin(GL_QUADS);
+   glTexCoord2f(0.0f, 0.0f); glVertex2f(Pxpos, Pypos);
+   glTexCoord2f(1.0f, 0.0f); glVertex2f(Pxpos+140.0,Pypos);
+   glTexCoord2f(1.0f, 1.0f); glVertex2f(Pxpos+140.0, Pypos+165.0f);
+   glTexCoord2f(0.0f, 1.0f); glVertex2f(Pxpos, Pypos+165.0f);
+   glEnd();
+       
+   
+   if (jumping) {
+        Bypos += Byvel;
+        Byvel -= 0.01f;
+        Bjumpduration += 0.01f;
+        if (Bjumpduration >= 3.0f) {
+            jumping = false;
+            Bypos = 70.0f;
+            Byvel = 0.2f;
+            Bjumpduration = 0.0f;
+        }
+    }
 
     xOscillate1 = xHinge1-(200 * sin(radian1));
     yOscillate1 = 450-(200 * cos(radian1));
@@ -441,7 +519,7 @@ void playPatallok(){
     PmirrormovingPos = 1000.0;
    }
    if(!jumping) {
-   glBindTexture(GL_TEXTURE_2D, spriteTextures[currentFrame]);
+   glBindTexture(GL_TEXTURE_2D, spriteTexturesp[currentFrame]);
    glBegin(GL_QUADS);
    glTexCoord2f(0.0f, 0.0f); glVertex2f(Pxpos, Pypos);
    glTexCoord2f(1.0f, 0.0f); glVertex2f(Pxpos+140.0,Pypos);
@@ -543,75 +621,6 @@ void drawSwargTexture(GLuint texture, float x, float y, float height, float widt
     glTexCoord2f(1.0, 0.0); glVertex2f(x+width,y);
     glEnd();
 }
-void loadTextures() {
- 
-    char filename[20];
-    for (int i = 0; i < MAX_FRAMES; i++)
-    {
-        sprintf(filename, "PRun%d.png", i + 1);  // Adjust the index offset
-        FILE *file = fopen(filename, "rb");
-        if (!file)
-        {
-            printf("Error loading sprite %d\n", i);
-            exit(1);
-        }
-        fclose(file);
-
-        spriteTextures[i] = SOIL_load_OGL_texture(
-            filename,
-            SOIL_LOAD_AUTO,
-            SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_INVERT_Y);
-        if (!spriteTextures[i])
-        {
-            printf("Error loading texture %d\n", i);
-            exit(1);
-        }
-    }
-}
-
-void update(int value)
-{
-    currentFrame = (currentFrame + 1) % MAX_FRAMES;
-    glutPostRedisplay();
-    glutTimerFunc(100, update, 0);
-}
-
-/*void loadTextures()
-{
-    char filename[20];
-    for (int i = 0; i <MAX_FRAMES; i++)
-    {
-
-        sprintf(filename, "C%d.png", i + 1);  // Adjust the index offset
-        FILE *file = fopen(filename, "rb");
-        if (!file)
-        {
-            printf("Error loading sprite %d\n", i);
-            exit(1);
-        }
-        fclose(file);
-
-        spriteTextures[i] = SOIL_load_OGL_texture(
-            filename,
-            SOIL_LOAD_AUTO,
-            SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_INVERT_Y);
-        if (!spriteTextures[i])
-        {
-            printf("Error loading texture %d\n", i);
-            exit(1);
-        }
-    }
-}*/
-/*void updateb(int value)
-{
-    currentFrame = (currentFrame + 1) % MAX_FRAMES;
-    glutPostRedisplay();
-    //glutTimerFunc(100, update, 0);
-     glutTimerFunc(50, update, 0);
-}*/
-
 void drawScore() {
     char scoreText[30];
     sprintf(scoreText, "    PUNYA = %d", score);
@@ -650,7 +659,7 @@ void init() {
    leftTrees = SOIL_load_OGL_texture("lefttrees.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    rightTrees = SOIL_load_OGL_texture("righttrees.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    character =SOIL_load_OGL_texture("character.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-   jumpcharacter =SOIL_load_OGL_texture("ch4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   
 
    honesty = SOIL_load_OGL_texture("honesty.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    pray = SOIL_load_OGL_texture("Pray283,290.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
@@ -674,6 +683,10 @@ void init() {
    pataltrans = SOIL_load_OGL_texture("pataltrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    svargatrans = SOIL_load_OGL_texture("svargatrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    Pjump = SOIL_load_OGL_texture("PJump.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   Bjump=SOIL_load_OGL_texture("ch4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   help1=SOIL_load_OGL_texture("help1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   help2=SOIL_load_OGL_texture("help2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   help3=SOIL_load_OGL_texture("help3.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
    playBackgroundMusic("music.wav");
 }
 void keyCallback(unsigned char key, int x, int y) {
@@ -688,28 +701,57 @@ void keyCallback(unsigned char key, int x, int y) {
     }
 }
 
+
 void mouseClick(int button, int state, int x, int y) {
     if (!gameStarted && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if ((x >= 325.0 && x <= 655.0) && (y >= 172.0 && y <= 272.0) && !help) { 
-            playSound("option.wav");
-            alSourcePlay(source);
+        // Check if the click is within the "Start Game" text region
+        if ((x >= 325.0 && x <= 655.0) && (y >= 172.0 && y <= 272.0) && !help) {
+            alSourcePlay(buttonSource);
             gameStarted = true;
         }
         if ((x >= 325.0 && x <= 655.0) && (y >= 315.0 && y <= 414.0) && !help) {
-            playSound("option.wav");
-            alSourcePlay(source);
+            alSourcePlay(buttonSource);
             help = true;
         }
         if ((x >= 325.0 && x <= 655.0) && (y >= 448.0 && y <= 549.0) && !help) {
-            playSound("option.wav");
-            alSourcePlay(source);
+            alSourcePlay(buttonSource);
             quit = true;
         }
-        if ((x >= 880.0 && x <= 988.0) && (y >= 10.0 && y <= 30.0)) {
-            playSound("option.wav");
-            alSourcePlay(source);
-            back = true;
+        if ((x >= 0.0 && x <= 100.0) && (y >= 540 && y <= 600.0)&&help) {
+           pthread_t audioThread2Id;
+            alSourcePlay(buttonSource);
+            back1 = true;
+            back3=false;
+           
         }
+        if ((x >= 880.0 && x <= 988.0) && (y >= 540 && y <= 600)&&help) {
+           pthread_t audioThread2Id;
+            alSourcePlay(buttonSource);
+            next1 = true;
+        }
+        if ((x >= 880.0 && x <= 988.0) && (y >= 540 && y <= 600)&&!help) {
+           pthread_t audioThread2Id;
+            alSourcePlay(buttonSource);
+            next2 = true;
+            next1=false;
+        }    
+       
+         if ((x >= 0.0 && x <= 100.0) && (y >= 540 && y <= 600)&&!next2) {
+           pthread_t audioThread2Id;
+            alSourcePlay(buttonSource);
+            back2 = true;
+            back3=false;
+            next1=false;
+            help=true;
+        }    
+         if ((x >= 0.0 && x <= 100.0) && (y >= 540 && y <= 600)&&next2) {
+           pthread_t audioThread2Id;
+            alSourcePlay(buttonSource);
+            
+            back3 = true;
+            next2=false;
+           // next=true;
+        }    
     }
 }
 void drawTime() {
@@ -812,4 +854,104 @@ void playSound(const char* filename) {
     
     alGenSources(1, &source);
     alSourcei(source, AL_BUFFER, buffer);
+}
+void loadTextures() {
+    if(level==-1){
+ 
+        char filename[20];
+        for (int i = 0; i < MAX_FRAMES; i++)
+        {
+            sprintf(filename, "PRun%d.png", i + 1);  // Adjust the index offset
+            FILE *file = fopen(filename, "rb");
+            if (!file)
+            {
+                printf("Error loading sprite %d\n", i);
+                exit(1);
+            }
+            fclose(file);
+
+            spriteTexturesp[i] = SOIL_load_OGL_texture(
+                filename,
+                SOIL_LOAD_AUTO,
+                SOIL_CREATE_NEW_ID,
+                SOIL_FLAG_INVERT_Y);
+            if (!spriteTexturesp[i])
+            {
+                printf("Error loading texture %d\n", i);
+                exit(1);
+            }
+        }
+    }
+    else if(level==0){
+        char filename[20];
+    for (int i = 0; i < 5; i++)
+    {
+        sprintf(filename, "ch%d.png", i + 1);  // Adjust the index offset
+        FILE *file = fopen(filename, "rb");
+        if (!file)
+        {
+            printf("Error loading sprite %d\n", i);
+            exit(1);
+        }
+        fclose(file);
+
+        spriteTextures[i] = SOIL_load_OGL_texture(
+            filename,
+            SOIL_LOAD_AUTO,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_INVERT_Y);
+        if (!spriteTextures[i])
+        {
+            printf("Error loading texture %d\n", i);
+            exit(1);
+        }
+    }
+    }
+    else{
+        char filename[20];
+    for (int i = 0; i < 2; i++)
+    {
+        sprintf(filename, "A%d.png", i + 1);  // Adjust the index offset
+        FILE *file = fopen(filename, "rb");
+        if (!file)
+        {
+            printf("Error loading sprite %d\n", i);
+            exit(1);
+        }
+        fclose(file);
+
+        spriteTextures[i] = SOIL_load_OGL_texture(
+            filename,
+            SOIL_LOAD_AUTO,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_INVERT_Y);
+        if (!spriteTextures[i])
+        {
+            printf("Error loading texture %d\n", i);
+            exit(1);
+        }
+    }
+
+    }
+}
+
+void update(int value)
+{if(level==-1){
+    currentFrame = (currentFrame + 1) % MAX_FRAMES;
+    glutPostRedisplay();
+    glutTimerFunc(100, update, 0);
+}
+else if(level==0){
+     currentFrame = (currentFrame + 1) % 5;
+    glutPostRedisplay();
+    glutTimerFunc(60, update, 0);
+
+}
+else{
+    currentFrame = (currentFrame + 1) % 2;
+    glutPostRedisplay();
+    glutTimerFunc(200, update, 0);
+
+
+}
 }

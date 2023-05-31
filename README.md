@@ -41,7 +41,7 @@ For libraries installation
   sudo apt-get install libsoil-dev
   
   
-  Compiling the file
+  ### Compiling the file
   
   ```Ubuntu
   gcc -o final final.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut

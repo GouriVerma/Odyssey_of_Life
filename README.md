@@ -56,7 +56,7 @@ For libraries installation
   ```
   
  ## Game Insights
- There are 3 levels in this game- Bhu-loka(level 0) from where the game starts, Patal-loka(level -1) and Svarga-loka(level 1). The character runs and      encounter the obstacles in the course of its run and its score i.e punya decreases if it collides with obstacles on ground and its score i.e punya increases if it catches the things in air. If the score at the end of 1 minute is less than -3000 it gets transported to level -1 and if  it is greater than 3000, it gets transported to level 1, else stays on the same level i.e level 0.  
+ There are 3 levels in this game- Bhu-loka(level 0) from where the game starts, Patal-loka(level -1) and Svarga-loka(level 1). The character runs and      encounter the obstacles in the course of its run and its score i.e punya decreases if it collides with obstacles on ground and its score i.e punya increases if it catches the things in air. If the score at the end of 1 minute is less than -3000 it gets teleported to level -1 and if  it is greater than 3000, it gets teleported to level 1, else stays on the same level i.e level 0.  
  
 ## Game Controls
 There are two things by which you can control the game spacebar and left mouse-click. If space-bar is pressed the character jumps and with the help of mouse-click you can navigate to different options on menupage- start, help and quit.

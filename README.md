@@ -15,42 +15,54 @@ The header files used under OpenGL library are glut,gl,glew,glu and under OpenAL
 
 
 ## Installation instructions 
-For cloning repository- ```git clone https://github.com/GouriVerma/Game.git``` 
+For cloning repository- 
+```Ubuntu git clone https://github.com/GouriVerma/Game.git
+``` 
 
 For libraries installation
 - For OpenGl :
   ```Ubuntu
   sudo apt install mesa-utils libgl1-mesa-dev
+  ```
 - For glut :
   ```Ubuntu
   sudo apt install freeglut3-dev
 - For glew :
   ```Ubuntu
   sudo apt install libglew-dev
+  ```
 - For OpenAL :
   ```Ubuntu
   sudo apt install libopenal-dev
+  ```
 - For alut :
   ```Ubuntu
   sudo apt install libalut-dev
+  ```
 - For sndfile :
   ```Ubuntu
   sudo apt install libsndfile1-dev
 - For soil :
   ```Ubuntu
   sudo apt-get install libsoil-dev
+  ```
   
-  
-  ### Compiling the file
+  Compiling the file
   
   ```Ubuntu
+  cd Game
   gcc -o final final.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut
+  ```
   
- ## 
+ ## Game Insights
+ 
   
   
 
   
   
+  
+  
+
   
   

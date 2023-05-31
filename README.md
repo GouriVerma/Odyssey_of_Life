@@ -16,7 +16,8 @@ The header files used under OpenGL library are glut,gl,glew,glu and under OpenAL
 
 ## Installation instructions 
 For cloning repository- 
-```Ubuntu git clone https://github.com/GouriVerma/Game.git
+```Ubuntu
+git clone https://github.com/GouriVerma/Game.git
 ``` 
 
 For libraries installation

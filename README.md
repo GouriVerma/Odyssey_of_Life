@@ -93,7 +93,10 @@ There are two things by which you can control the game- spacebar and left mousec
 
 - Ankit Kumar Singh ([@](https://github.com/johndoe))
 - Sai Nikhita Palisetty ([@SaiNikhita-P](https://github.com/SaiNikhita-P))
-- Alex Johnson ([@alexjohnson](https://github.com/alexjohnson))
+- Saurav Kumar Singh  ([@sauravgithub-web](https://github.com/sauravatgithub-web))
+- Sreekar Vetsa  ([@alexjohnson](https://github.com/alexjohnson))
+- Gouri Verma  ([@alexjohnson](https://github.com/alexjohnson))
+
 
 
 

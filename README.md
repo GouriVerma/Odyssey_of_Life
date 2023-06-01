@@ -52,7 +52,7 @@ For libraries installation
   
   ```Ubuntu
   cd Game
-  gcc -o final final.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut
+  gcc -o project project.c -lglut -lGL -lGLEW -lGLU -lglfw -lm -lSOIL -lpthread -lopenal -lsndfile -lalut
   ```
   
  ## Game Insights

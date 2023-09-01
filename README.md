@@ -3,9 +3,10 @@ This project is a game completely made using C. The game is "Odyssey of Life", a
 are some virtuous objects which increase your punya and also there are some bad objects which can decrease your punya. 
 
 ![Alt text](bhuloktrans.png)
+<img
 ![Alt text](pataltrans.png)
 
-![intro](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3b70b3e3-0efe-4dad-8d15-a6e507bd7751)
+<img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3b70b3e3-0efe-4dad-8d15-a6e507bd7751" width="200" height="200">
 
 
 

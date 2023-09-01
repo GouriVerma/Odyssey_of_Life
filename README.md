@@ -2,6 +2,10 @@
 This project is a game completely made using C. The game is "Odyssey of Life", a multi-levelled game of three levels, which revolves around your punya gained(points scored) and 3 lokas i.e. bhu-loka , pathal-loka, swarg-loka. You start the game in bhu-loka and based on your punya you either get promoted to swarg-lok or get demoted to pathal-lok. There
 are some virtuous objects which increase your punya and also there are some bad objects which can decrease your punya. 
 
+<div style="display: flex; justify-content: space-between;">
+    <img src="bhuloktrans.png" alt="Image 1" width="200" />
+    <img src="pataltrans.png" alt="Image 2" width="200" />
+</div>
 
 ![Alt text](bhuloktrans.png)
 <!--<img src="bhuloktrans.png" width="200" height="100">-->

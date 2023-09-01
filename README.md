@@ -9,6 +9,11 @@ are some virtuous objects which increase your punya and also there are some bad 
 
 
 
+https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/04dc0a55-f4a1-4aad-9e0e-ca5c4dcbbe98
+
+
+
+
 ## Libraries
 OpenGL and OpenAL are the two libraries which are used in making the project. OpenGL is a graphics library which is and abstarct API to draw 2D and 3D graphics and OpenAL is an environmental 3D audio library which is cross-platform audio API.
 The header files used under OpenGL library are glut,gl,glew,glu and under OpenAL, header files used are al,alc,alext and alut. Except these header files used are sndfiile and pthread.

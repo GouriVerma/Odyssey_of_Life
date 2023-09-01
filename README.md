@@ -16,10 +16,7 @@ are some virtuous objects which increase your punya and also there are some bad 
 </div>
 
 
-
-
-https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/61ef0495-9f5b-4bba-ad09-8dfa163c0c46
-
+https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/c958c7ad-5392-4878-80f0-dbdc8f3bca31
 
 
 

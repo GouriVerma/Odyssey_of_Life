@@ -15,8 +15,8 @@ are some virtuous objects which increase your punya and also there are some bad 
 
 </div>
 
-
-https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/c958c7ad-5392-4878-80f0-dbdc8f3bca31
+<!--![Alt Text](https://github.com/GouriVerma/Odyssey_of_Life/raw/main/assets/122892114/c958c7ad-5392-4878-80f0-dbdc8f3bca31.mp4)-->
+<!--https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/c958c7ad-5392-4878-80f0-dbdc8f3bca31-->
 
 
 

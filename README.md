@@ -2,21 +2,26 @@
 This project is a game completely made using C. The game is "Odyssey of Life", a multi-levelled game of three levels, which revolves around your punya gained(points scored) and 3 lokas i.e. bhu-loka , pathal-loka, swarg-loka. You start the game in bhu-loka and based on your punya you either get promoted to swarg-lok or get demoted to pathal-lok. There
 are some virtuous objects which increase your punya and also there are some bad objects which can decrease your punya. 
 
-<div style="display: flex; justify-content: space-around;">
+<div style="display: flex; justify-content: space-around; flex-wrap:wrap">
     <img src="bhuloktrans.png" alt="Image 1" width="500" />
     <img src="pataltrans.png" alt="Image 2" width="500" />
+    <img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3b70b3e3-0efe-4dad-8d15-a6e507bd7751" width="500" >
+    <img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3d2de274-8b80-4c2d-8a70-16c50b243f3f" width="500" >
+    <img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/dcee8b4f-855d-48da-8a61-a80db8263cdb" width="500" >
+    <img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/533235f9-7277-48d8-890f-2911b7e45209" width="500" >
+    
+
+    
+
 </div>
 
-![Alt text](bhuloktrans.png)
-<!--<img src="bhuloktrans.png" width="200" height="100">-->
-![Alt text](pataltrans.png)
 
-<img src="https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3b70b3e3-0efe-4dad-8d15-a6e507bd7751" width="400" height="200">
 
-![intro](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/b91b7415-39e3-454d-91ac-9f770bcca9cd)![WhatsApp Video 2023-08-30 at 5 24 52 PM 00_00_26_21 Still002](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/0bd0c3d9-dc6b-456a-a614-20d3365df496)
 
-![WhatsApp Video 2023-08-30 at 5 24 52 PM 00_00_41_01 Still003](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/dcee8b4f-855d-48da-8a61-a80db8263cdb)
-![WhatsApp Video 2023-08-30 at 5 24 52 PM 00_00_57_03 Still004](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/533235f9-7277-48d8-890f-2911b7e45209)
+https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/61ef0495-9f5b-4bba-ad09-8dfa163c0c46
+
+
+
 
 
 

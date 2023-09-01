@@ -5,7 +5,7 @@ are some virtuous objects which increase your punya and also there are some bad 
 ![Alt text](bhuloktrans.png)
 ![Alt text](pataltrans.png)
 
-![WhatsApp Video 2023-08-30 at 5 24 52 PM 00_00_03_18 Still001](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/9354748e-4602-4c5c-b7d4-cf0632078b3d)
+![intro](https://github.com/GouriVerma/Odyssey_of_Life/assets/122892114/3b70b3e3-0efe-4dad-8d15-a6e507bd7751)
 
 
 

@@ -243,18 +243,10 @@ void init() {
     pataltrans = SOIL_load_OGL_texture("pataltrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     svargatrans = SOIL_load_OGL_texture("svargatrans.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 
-    if(level == 0) {
-        playBackgroundMusicB("music.wav");
-        alSourcePlay(backgroundSourceB);
-    }    
-    else if(level == -1) {
-        playBackgroundMusicP("music.wav");
-        alSourcePlay(backgroundSourceP);
-    }
-    else if(level == 1) {
-        playBackgroundMusicS("music.wav");
-        alSourcePlay(backgroundSourceS);
-    }
+    
+    playBackgroundMusicB("music.wav");
+    alSourcePlay(backgroundSourceB);
+    
     
 }
 
@@ -947,7 +939,7 @@ void playBackgroundMusicB(const char* filename) {   // for background music
     
     alGenSources(1, &backgroundSourceB);
     alSourcei(backgroundSourceB, AL_BUFFER, buffer);    // sets the buffer as the audio source
-    
+    alSourcei(source, AL_LOOPING, AL_TRUE);
     
 
 }
